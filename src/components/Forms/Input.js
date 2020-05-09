@@ -1,24 +1,42 @@
 import React, { Component } from 'react'
-import { Text, StyleSheet, View, TextInput, ScrollView, KeyboardAvoidingView } from 'react-native'
+import { Text, StyleSheet, View, TextInput, TouchableOpacity, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import colors from '../../styles/colors'
 import { PropTypes } from 'prop-types'
 
 
 export default class Input extends Component {
+    constructor(props){
+        super(props);
+        this.state= {
+            secureInput: props.inputType === 'TEXT' || props.inputType === 'EMAIL' ? false : true ,
+        };
+        this.showPassword = this.showPassword.bind(this);
+    }
 
+    showPassword(){
+        this.setState({ secureInput: !this.state.secureInput });
+    }
     render() {
-        const {labelText, labelTextSize, labelColor, textColor, bottomBorder, inputType} = this.props;
+        const {labelText, labelTextSize, labelColor, textColor, bottomBorder, inputType, customStyles} = this.props;
+        const { secureInput }= this.state;
         const fontSize = labelTextSize || 20;
         const color = labelColor || 'white';
         const inputColor = textColor || 'white';
         const borderBottomColor = bottomBorder || 'white';
         return (
-            <View>
+            <View style= {[styles.container, {customStyles}]}>
                 <Text style= {[{fontSize}, {color},  styles.label]}> {labelText} </Text>
+                {inputType === 'PASSWORD' ? 
+                <TouchableOpacity 
+                    style= {styles.showbtn}
+                    onPress= {this.showPassword}>
+                    <Text style={styles.showbtnText}>{secureInput ? 'SHOW' : 'HIDE'}</Text>
+                </TouchableOpacity>
+                : null}
                 <TextInput 
                     style={[{color : inputColor}, {borderBottomColor}, styles.input]}
-                    secureTextEntry={inputType === 'PASSWORD' ? true : false}
+                    secureTextEntry={secureInput}
                 />
             </View>
         )
@@ -32,9 +50,13 @@ Input.propTypes= {
     textColor : PropTypes.string,
     bottomBorder : PropTypes.string,
     inputType: PropTypes.string.isRequired,
+    customStyles: PropTypes.object,
 }
 
 const styles = StyleSheet.create({
+    container:{
+        display: 'flex',
+    },
     label :{
         fontWeight: '700',
         marginBottom: 10,
@@ -45,5 +67,13 @@ const styles = StyleSheet.create({
         paddingBottom: 12,
         fontSize: 20,
         marginBottom: 15,
+    },
+    showbtn: {
+        position: 'absolute',
+        right: 10,
+    },
+    showbtnText:{
+        color: 'white',
+        fontWeight: '700'
     }
 })

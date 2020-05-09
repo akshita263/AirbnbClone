@@ -4,15 +4,18 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import colors from '../styles/colors'
 import { PropTypes } from 'prop-types'
 import Input from '../components/Forms/Input'
+import NextArrow from '../components/Buttons/NextArrow'
 
 export default class Login extends Component {
+    handleNextButton(){
+        alert('Next!')
+    }
     render() {
         return (
             <KeyboardAvoidingView style={styles.container}>
                 <View style= {styles.scrollContainer}> 
                     <ScrollView style= {styles.scroll}>
-                        <Text 
-                        style= {styles.header}>
+                        <Text style= {styles.header}>
                             Log in
                         </Text>
                         <Input
@@ -22,8 +25,12 @@ export default class Login extends Component {
                         inputType ="PASSWORD"
                         labelText= "PASSWORD"/>
                     </ScrollView>
+                    <View style={styles.next}>
+                        <NextArrow 
+                            handleNextButton= {this.handleNextButton}
+                        />
+                    </View>
                 </View>
-               
             </KeyboardAvoidingView>
         )
     }
@@ -33,7 +40,7 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         display: 'flex',
-        backgroundColor: colors.red1
+        backgroundColor: colors.red1,
     },
     scrollContainer: {
         flex:1,
@@ -51,7 +58,9 @@ const styles = StyleSheet.create({
         fontWeight: '300',
         marginBottom :40,
     },
-    end:{
-        marginBottom: 900
+    next:{
+        alignItems: 'flex-end',
+        right: 25, 
+        bottom: 20,
     }
 })
