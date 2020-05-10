@@ -12,7 +12,9 @@ export default class NextArrow extends Component {
         return (
             <TouchableHighlight 
                 onPress= {handleNextButton }
-                style={[opacityStyle , styles.btn]}>
+                style={[opacityStyle , styles.btn]}
+                disabled = {disabled}
+            >
                 <Icon 
                     name="angle-right"
                     color= {colors.red1}

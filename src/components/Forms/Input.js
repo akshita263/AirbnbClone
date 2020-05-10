@@ -18,7 +18,7 @@ export default class Input extends Component {
         this.setState({ secureInput: !this.state.secureInput });
     }
     render() {
-        const {labelText, labelTextSize, labelColor, textColor, bottomBorder, inputType, customStyles} = this.props;
+        const {labelText, labelTextSize, labelColor, textColor, bottomBorder, inputType, customStyles, onChangeText} = this.props;
         const { secureInput }= this.state;
         const fontSize = labelTextSize || 20;
         const color = labelColor || 'white';
@@ -37,6 +37,7 @@ export default class Input extends Component {
                 <TextInput 
                     style={[{color : inputColor}, {borderBottomColor}, styles.input]}
                     secureTextEntry={secureInput}
+                    onChangeText ={onChangeText}  
                 />
             </View>
         )
@@ -51,6 +52,7 @@ Input.propTypes= {
     bottomBorder : PropTypes.string,
     inputType: PropTypes.string.isRequired,
     customStyles: PropTypes.object,
+    onChangeText: PropTypes.func,
 }
 
 const styles = StyleSheet.create({
